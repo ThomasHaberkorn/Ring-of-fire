@@ -9,12 +9,15 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { DialogAddPlayerComponent } from '../dialog-add-player/dialog-add-player.component';
+import { GameInfoComponent } from '../game-info/game-info.component';
+import {MatCardModule} from '@angular/material/card';
 
 
 @Component({
   selector: 'app-game',
   standalone: true,
-  imports: [CommonModule, PlayerComponent, MatButtonModule, MatIconModule, MatFormFieldModule, MatInputModule],
+  imports: [CommonModule, PlayerComponent, MatButtonModule, MatIconModule, MatFormFieldModule, MatInputModule, GameInfoComponent, MatCardModule
+  ],
   templateUrl: './game.component.html',
   styleUrl: './game.component.scss'
 })
@@ -40,6 +43,9 @@ export class GameComponent implements OnInit{
         this.currentCard = card;
         console.log(this.currentCard);
         this.pickCardAnimation = true;
+
+        this.game.currentPlayer++;  
+        this.game.currentPlayer = this.game.currentPlayer % this.game.players.length;
         
         setTimeout(() => {
           if (this.currentCard !== undefined) {
@@ -57,7 +63,9 @@ export class GameComponent implements OnInit{
     const dialogRef = this.dialog.open(DialogAddPlayerComponent);
 
     dialogRef.afterClosed().subscribe((name: string) => {
-      this.game.players.push(name);
+      if(name && name.length > 0){
+        this.game.players.push(name);
+      }
     });
   }
 }

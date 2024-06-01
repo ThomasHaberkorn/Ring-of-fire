@@ -9,6 +9,7 @@ import { Component, Input } from '@angular/core';
 })
 export class PlayerComponent {
   @Input() player: string | undefined = '';
+  @Input() playerActive: boolean | undefined = false;
   @Input() name: string | undefined = '';
  
 }
