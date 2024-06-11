@@ -1,5 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
+import { Firestore, collectionData, collection, addDoc, doc, docData } from '@angular/fire/firestore';
+import { Game } from '../../models/game';
+
 
 @Component({
   selector: 'app-start-screen',
@@ -10,10 +13,23 @@ import { Router } from '@angular/router';
 })
 export class StartScreenComponent {
 
- constructor(private router: Router) {}
-  newGame() {
-    //StartGame
-    this.router.navigate(['game']);
+ constructor(private firestore: Firestore,  private router: Router) {
+  
   }
-}
+
+  ngOnInit(): void {}
+
+  async newGame() {
+    let game = new Game();
+    try{  
+    const gamesCollection = collection(this.firestore, 'games');  
+      const gameinfo = await addDoc(gamesCollection, game.toJson());
+        this.router.navigateByUrl('/game/' + gameinfo.id);
+      } catch (error) {
+        console.error('Error adding document: ', error);
+      }
+    }
+  
+
+  }
 
