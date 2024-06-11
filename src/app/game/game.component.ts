@@ -28,7 +28,7 @@ export class GameComponent implements OnInit{
   pickCardAnimation = false;
   currentCard: string | undefined = '';
   game: Game;
-  gameId: string | undefined;
+  gameId: string = '';
   firestore: Firestore = inject(Firestore);
   item$: Observable<Game[]>;
 
