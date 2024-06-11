@@ -54,8 +54,7 @@ export class GameComponent implements OnInit{
   }
 
   loadGame(id: string) {
-  
-    const gameDoc = doc(this.firestore, `games/${id}`); 
+      const gameDoc = doc(this.firestore, `games/${id}`); 
     docData(gameDoc).subscribe((game: any) => {
       this.game = game as Game;
       console.log("Loaded game:", this.game);
@@ -87,7 +86,7 @@ export class GameComponent implements OnInit{
         setTimeout(() => {
           if (this.currentCard !== undefined) {
             this.game.playedCards.push(this.currentCard);
-            // this.saveGame();
+            this.saveGame();
           }
           this.pickCardAnimation = false;
         }, 1000);
@@ -112,7 +111,7 @@ export class GameComponent implements OnInit{
     if (this.gameId) {
       updateDoc(doc(this.firestore, 'games', this.gameId), this.game.toJson());
     } else {
-      console.error('gameId is undefined');
+      console.error('gameId is now undefined');
     }
   }
   
